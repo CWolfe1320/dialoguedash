@@ -85,6 +85,14 @@ namespace ingredients
             return "condiment";
         }
     } 
+
+    abstract class Processed : Ingredient
+    {
+        public override string GetIngredientType()
+        {
+            return "processed";
+        }
+    }
     //END INHERITABLE CLASSES
     //MEAT INGREDIENTS
     class BurgerPatty : Meat
@@ -111,7 +119,7 @@ namespace ingredients
 
             storageLocation = "fridge";
 
-            cost = 4.0;
+            cost = 5.0;
         }
     }
 
@@ -144,6 +152,19 @@ namespace ingredients
     }
     //END MEAT INGREDIENTS
     //VEGETABLE INGREDIENTS
+    class ImpossiblePatty : Vegetable
+    {
+        public ImpossiblePatty()
+        {
+            defaultInstructions.Add("stove");
+
+            ingredientName = "impossible patty";
+
+            storageLocation = "fridge";
+
+            cost = 5.0;
+        }
+    }
     class VegetablePatty : Vegetable
     {
         public VegetablePatty()
@@ -168,7 +189,7 @@ namespace ingredients
 
             storageLocation = "fridge";
 
-            cost = 0.5;
+            cost = 0;
         }
     }
 
@@ -183,7 +204,21 @@ namespace ingredients
 
             storageLocation = "pantry";
 
-            cost = 0.5;
+            cost = 0;
+        }
+    }
+
+    class RedOnion : Vegetable
+    {
+        public RedOnion()
+        {
+            defaultInstructions.Add("cutting board");
+
+            ingredientName = "red onion";
+
+            storageLocation = "pantry";
+
+            cost = 0;
         }
     }
 
@@ -197,7 +232,7 @@ namespace ingredients
 
             storageLocation = "pantry";
 
-            cost = 0.5;
+            cost = 0;
         }
     }
 
@@ -211,7 +246,21 @@ namespace ingredients
 
             storageLocation = "fridge";
 
-            cost = 0.25;
+            cost = 0;
+        }
+    }
+
+    class Jalepeno : Vegetable
+    {
+        public Jalepeno()
+        {
+            defaultInstructions.Add("cutting board");
+
+            ingredientName = "jalapeno";
+
+            storageLocation = "fridge";
+
+            cost = 0;
         }
     }
 
@@ -223,6 +272,34 @@ namespace ingredients
             defaultInstructions.Add("oven");
 
             ingredientName = "potato";
+
+            storageLocation = "pantry";
+
+            cost = 1.0;
+        }
+    }
+
+    class Avocado : Vegetable
+    {
+        public Avocado()
+        {
+            defaultInstructions.Add("cutting board");
+
+            ingredientName = "avocado";
+
+            storageLocation = "pantry";
+
+            cost = 1.0;
+        }
+    }
+
+    class Mushroom : Vegetable
+    {
+        public Mushroom()
+        {
+            defaultInstructions.Add("cutting board");
+
+            ingredientName = "mushroom";
 
             storageLocation = "pantry";
 
@@ -315,6 +392,94 @@ namespace ingredients
             cost = 0.75;
         }
     }
+
+    class CheddarCheese : Dairy
+    {
+        public CheddarCheese()
+        {
+            ingredientName = "cheddar cheese";
+
+            storageLocation = "fridge";
+
+            cost = 1.0;
+        }
+    }
+
+    class SwissCheese : Dairy
+    {
+        public SwissCheese()
+        {
+            ingredientName = "swiss cheese";
+
+            storageLocation = "fridge";
+
+            cost = 1.0;
+        }
+    }
+
+    class ProvoloneCheese : Dairy
+    {
+        public ProvoloneCheese()
+        {
+            ingredientName = "provolone cheese";
+
+            storageLocation = "fridge";
+
+            cost = 1.0;
+        }
+    }
+
+    class GoudaCheese : Dairy
+    {
+        public GoudaCheese()
+        {
+            ingredientName = "gouda cheese";
+
+            storageLocation = "fridge";
+
+            cost = 1.0;
+        }
+    }
+
+    class MozzarellaCheese : Dairy
+    {
+        public MozzarellaCheese()
+        {
+            ingredientName = "mozzarella cheese";
+
+            storageLocation = "fridge";
+
+            cost = 1.0;
+        }
+    }
+
+    class BleuCheese : Dairy
+    {
+        public BleuCheese()
+        {
+            ingredientName = "bleu cheese";
+
+            storageLocation = "fridge";
+
+            cost = 1.0;
+        }
+    }
+
+    class CheeseSticks : Dairy
+    {
+        public CheeseSticks()
+        {
+
+            defaultInstructions.Add("deep fryer");
+
+            ingredientName = "cheese sticks";
+
+            storageLocation = "fridge";
+
+            cost = 3.0;
+        }
+    }
+
     //END DAIRY INGREDIENTS
     //GRAIN INGREDIENTS
     class Bun : Grain
@@ -368,4 +533,45 @@ namespace ingredients
         }
     }
     //END CONDIMENT INGREDIENTS
+    //PROCESSED INGREDIENTS
+    class ColeSlaw : Processed
+    {
+        public ColeSlaw()
+        {
+            ingredientName = "cole slaw";
+
+            storageLocation = "fridge";
+
+            cost = 1.0;
+        }
+    }
+
+    class OnionRing : Processed
+    {
+        public OnionRing()
+        {
+            defaultInstructions.Add("deep fryer");
+
+            ingredientName = "onion ring";
+
+            storageLocation = "fridge";
+
+            cost = 1.0;
+        }
+    }
+
+    class Sauerkraut : Processed
+    {
+        public Sauerkraut()
+        {
+            defaultInstructions.Add("stove");
+            
+            ingredientName = "sauerkraut";
+
+            storageLocation = "fridge";
+
+            cost = 0.0;
+        }
+    }
+    //END PROCESSED INGREDIENTS
 }
