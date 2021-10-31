@@ -8,15 +8,30 @@ public class Cook : Interactable
     private string activeOrder;
 
     public override void Interact(){
+        // TODO
     }
 
-    private string listenToPlayer(){
+    private void addOrder() {
+        string playerOrder = "";
+        playerOrder = listenToPlayer();
+
+        if(isOrderValid(playerOrder))
+            pendingOrders.Enqueue(playerOrder);
+    }
+
+    private string listenToPlayer() {
+        // TODO
         return "[player order]";
     }
 
-    private void setActiveOrder(){
+    private void setActiveOrder() {
         if(activeOrder == null)
             activeOrder = pendingOrders.Dequeue();
         return;
+    }
+
+    private bool isOrderValid(string order) {
+        // TODO
+        return false;
     }
 }
