@@ -5,21 +5,67 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637682817931633724
-    m_Hash: 1860606031
+      ticks: 637701730378006561
+    m_Hash: 112437717
   m_LockFileStatus:
     m_FilePath: C:/Users/pegda/Documents/DialogueDash/Dialogue Dash/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637682822336584834
-    m_Hash: 1307731283
+      ticks: 637701730378206831
+    m_Hash: 3192768511
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
   m_Packages:
     m_ResolvedPackages:
+    - packageId: com.facebook.witai@file:C:\Users\pegda\Documents\Wit.AI\wit-unity-main
+      testable: 0
+      isDirectDependency: 1
+      version: 0.0.17
+      source: 4
+      resolvedPath: C:\Users\pegda\Documents\Wit.AI\wit-unity-main
+      assetPath: Packages/com.facebook.witai
+      name: com.facebook.witai
+      displayName: Wit.ai
+      author:
+        name: 
+        email: 
+        url: 
+      category: 
+      type: 
+      description: wit-unity is the Unity SDK for Wit.ai. It provides convenience
+        tools for activating Wit and processing the responses that are returned.
+      status: 4
+      errors: []
+      versions:
+        all: []
+        compatible: []
+        verified: 
+      dependencies: []
+      resolvedDependencies: []
+      keywords: []
+      registry:
+        id: 
+        name: 
+        url: 
+        scopes: []
+        isDefault: 0
+        capabilities: 0
+      hasRegistry: 0
+      hideInEditor: 1
+      entitlements:
+        isAllowed: 1
+      isAssetStorePackage: 0
+      datePublishedTicks: 0
+      documentationUrl: 
+      hasRepository: 0
+      repository:
+        type: 
+        url: 
+        revision: 
+        path: 
     - packageId: com.unity.2d.animation@5.0.7
       testable: 0
       isDirectDependency: 1
@@ -3489,6 +3535,20 @@ m_PackageAssets:
         revision: 6f9c488e4d487ead34ee4d516f0a2f4a911a8b25
         path: 
   m_LocalPackages:
-    m_LocalFileStatus: []
+    m_LocalFileStatus:
+    - m_FilePath: C:\Users\pegda\Documents\Wit.AI\wit-unity-main/package.json
+      m_PathExists: 1
+      m_ContentTrackingEnabled: 1
+      m_ModificationDate:
+        serializedVersion: 2
+        ticks: 637699565160000000
+      m_Hash: 2919655659
+    - m_FilePath: C:\Users\pegda\Documents\Wit.AI\wit-unity-main
+      m_PathExists: 1
+      m_ContentTrackingEnabled: 1
+      m_ModificationDate:
+        serializedVersion: 2
+        ticks: 0
+      m_Hash: 0
 m_ProjectPath: C:/Users/pegda/Documents/DialogueDash/Dialogue Dash/Packages
 m_EditorVersion: 2020.3.18f1 (a7d1c678663c)
