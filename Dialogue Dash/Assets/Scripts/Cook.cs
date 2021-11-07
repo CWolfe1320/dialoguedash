@@ -3,25 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Cook : Interactable
-{
-    private Queue<string> pendingOrders = new Queue<string>();
-    private string activeOrder;
+{   
+    // [SerializeField] private Wit wit;
+
+    // 
+    private Queue<Order> pendingOrders = new Queue<Order>();
+    private Order activeOrder;
 
     public override void Interact(){
         // TODO
+        Order newOrder = listenToPlayer();
+        addOrder(newOrder);
     }
 
-    private void addOrder() {
-        string playerOrder = "";
-        playerOrder = listenToPlayer();
-
-        if(isOrderValid(playerOrder))
-            pendingOrders.Enqueue(playerOrder);
+    //Adds order to the pending order queue
+    private void addOrder(Order newOrder) {
+        if(isOrderValid(newOrder))
+            pendingOrders.Enqueue(newOrder);
     }
 
-    private string listenToPlayer() {
+    private Order listenToPlayer() {
         // TODO
-        return "[player order]";
+        /*
+        var response = wit.activate(); 
+        */
+        Order newOrder = new Order();
+        return newOrder;
     }
 
     private void setActiveOrder() {
@@ -30,8 +37,10 @@ public class Cook : Interactable
         return;
     }
 
-    private bool isOrderValid(string order) {
+    private bool isOrderValid(Order order) {
         // TODO
         return false;
     }
+
+    //Invoke repeating for cooking tasks (ingredients)
 }
