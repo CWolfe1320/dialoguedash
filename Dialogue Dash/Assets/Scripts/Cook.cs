@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using recipes;
 public class Cook : Interactable
 {   
     [SerializeField]
@@ -21,6 +21,7 @@ public class Cook : Interactable
     private RecipeDictionary recipeDict;
     private Queue<Order> pendingOrders = new Queue<Order>();
     private Order activeOrder;
+    private bool isCooking;
 
     
 
@@ -38,8 +39,7 @@ public class Cook : Interactable
     
 
     public override void Interact(){
-        
-        dialogue.text = dialogueText;
+       // dialogue.text = dialogueText;
         
     }
 
@@ -52,7 +52,7 @@ public class Cook : Interactable
     //Flags for entrees, sides, and drinks
     private bool entreeIncluded = false;
     private bool sideIncluded = false;
-    private bool drinks = false;
+    private bool drinkIncluded = false;
 
     private Order listenToPlayer() {
         List<Recipe> understoodItems = new List<Recipe>();
@@ -67,7 +67,7 @@ public class Cook : Interactable
     }
 
 
-    private Recipes instRecipe(string recipeString){
+    private Recipe instRecipe(string recipeString){
         Recipe addedRecipe;
         switch (recipeString){
             case "cluckin burger":
@@ -146,5 +146,22 @@ public class Cook : Interactable
         return false;
     }
 
-    //Invoke repeating for cooking tasks (ingredients)
+    private void cookIngredients(){
+        Queue<string> instructionOrder = new Queue<string>();
+        //For each recipe in order
+        foreach (Recipe rec in activeOrder.getItems()){
+            //For each Ingredient in recipe add the storage location and default instruction string. 
+            foreach(var ing in rec.GetPrepInstructions()){
+                List<string> prepInstructions = ing.Value;
+                foreach(string prepInst in prepInstructions){
+                    instructionOrder.Enqueue(prepInst);
+                }
+            }
+        }
+        //Make chef do instructions in order for the recipes.
+
+    }
+
+
+
 }
