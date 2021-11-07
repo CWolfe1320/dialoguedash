@@ -1,26 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;  
+using UnityEngine;
+using TMPro;
 
 
 public class Customer : Interactable
 {
-    public Order order;
-    public string message = "Howdy, table for one please";
-    
+    [SerializeField]
+    TextMeshProUGUI dialogue;
+
+    [SerializeField]
+    GameObject dialogueBox;
+
+    private string dialogueText = "Listening...";
+
+
+    private Order order;
+    private RecipeDictionary recipeDict;
+
     public override void Interact(){
-        Debug.Log(message);
+
+        dialogue.text = dialogueText;
+        
     }
 
-    public double getPayment(){
-        return order.GetFinalPrice();
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        dialogueBox.SetActive(true);
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        dialogueBox.SetActive(false);
+    }
+
     
-    public bool inspectOrder(Order deliveredOrder){
-        return true;
-    }
-
-    public void leaveRestaurant(){
-        Destroy(this);
-    }
 }

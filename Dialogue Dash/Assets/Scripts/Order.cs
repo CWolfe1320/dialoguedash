@@ -30,4 +30,9 @@ public class Order : MonoBehaviour
     }
 
 
+    public void AllocateOrder()
+    {
+        items.Add(new Recipe());
+    }
+
 }

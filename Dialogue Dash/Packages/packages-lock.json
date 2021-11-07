@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.facebook.witai": {
+      "version": "file:C:/Users/corey/Documents/wit-unity-repaired-dir-structure",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "5.0.7",
       "depth": 0,
