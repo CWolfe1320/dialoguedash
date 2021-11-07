@@ -11,12 +11,7 @@ public class Table : Interactable
 
     // Start is called before the first frame update
     public override void Interact(){
-        if(customer.inspectOrder(dummyOrder)){
-            customer.getPayment();
-        }
-        else{
-            customer.leaveRestaurant();
-        }
+        
     }
 
 }
