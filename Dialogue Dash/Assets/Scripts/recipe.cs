@@ -4,7 +4,7 @@ using ingredients;
 
 namespace recipes
 {
-    abstract class Recipe //BASE CLASS
+    public abstract class Recipe //BASE CLASS
     {
         protected string recipeName;
 
@@ -45,9 +45,15 @@ namespace recipes
             return finalPrice;
         }
 
-        public bool compareRecipe(Recipe recipe){
-            if(this.recipeName = recipe.recipeName);
+        public string GetRecipeName()
+        {
+            return recipeName;
         }
+
+        public bool compareRecipe(Recipe comparedRecipe){
+            return recipeName.Equals(comparedRecipe.GetRecipeName());
+        }
+
     }
 
 

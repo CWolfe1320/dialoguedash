@@ -6,14 +6,16 @@ using ingredients;
 
 public class RecipeDictionary : MonoBehaviour
 {
-    private List<Recipe> entrees;
-    private List<Recipe> sides;
-    private List<Recipe> drinks;
+    private List<Recipe> entrees = new List<Recipe>();
+    private List<Recipe> sides = new List<Recipe>();
+    private List<Recipe> drinks = new List<Recipe>();
 
 
     public RecipeDictionary()
     {
         InitializeEntrees();
+        InitializeSides();
+        InitializeDrinks();
     }
 
     public void InitializeEntrees()
@@ -42,6 +44,21 @@ public class RecipeDictionary : MonoBehaviour
         drinks.Add(new recipes.Drink(new Water()));
         drinks.Add(new recipes.Drink(new Tea()));
         drinks.Add(new recipes.Drink(new Coffee()));
+    }
+
+    public List<Recipe> GetEntrees()
+    {
+        return entrees;
+    }
+
+    public List<Recipe> GetDrinks()
+    {
+        return drinks;
+    }
+
+    public List<Recipe> GetSides()
+    {
+        return sides;
     }
 
 }

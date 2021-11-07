@@ -35,7 +35,6 @@ public class Cook : Interactable
     }
 
 
-    // 
     
 
     public override void Interact(){
