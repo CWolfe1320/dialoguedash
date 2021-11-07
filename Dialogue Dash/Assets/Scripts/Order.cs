@@ -39,7 +39,6 @@ public class Order : MonoBehaviour
     public List<Recipe> getItems(){
         return items; 
     }
-
     //Compare two orders to see if they are the same
     public bool compareOrder(Order customerOrder){
         bool isEqual = false;
@@ -56,6 +55,4 @@ public class Order : MonoBehaviour
         }
         return isEqual;
     }
-
-
 }

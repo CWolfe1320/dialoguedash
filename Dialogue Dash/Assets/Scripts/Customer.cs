@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using TMPro;
 using recipes;
@@ -23,17 +24,30 @@ public class Customer : Interactable
 
     private RecipeDictionary recipeDict = new RecipeDictionary();
 
-
+    bool orderStarted = false;
 
     public override void Interact(){
 
-        RandomizeOrder();
 
+        if (orderStarted)
+        {
+            LoadInterimDialogue();
+            LoadRandomInterimDialogue();
 
+            dialogue.text = interimUtteranceMessage;
+        }
+        else
+        {
+            RandomizeOrder();
 
-        dialogue.text = "Entree: " + entree.GetRecipeName() + " Side: " + side.GetRecipeName() + " Drink: " + drink.GetRecipeName();
+            LoadOrderDialogue();
+            LoadRandomOrderDialogue();
 
+            dialogue.text = orderUtteranceMessage;
+            orderStarted = true;
+        }
 
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -60,9 +74,78 @@ public class Customer : Interactable
 
     }
 
+
+    public string orderUtteranceFile = "initialOrderUtterances";
+    private string[] orderUtteranceContents;
+    public void LoadOrderDialogue()
+    {
+        TextAsset txtAssets = (TextAsset)Resources.Load(orderUtteranceFile);
+
+        if(txtAssets != null)
+        {
+            orderUtteranceContents = (txtAssets.text.Split('\n'));
+        }
+
+        /*for(int i = 0; i < orderUtteranceContents.Length - 1; ++i)
+        {
+            Debug.Log(orderUtteranceContents[i]);
+        }*/
+        
+    }
+    private string orderUtteranceMessage;
+
     public void LoadRandomOrderDialogue()
     {
+        orderUtteranceMessage = orderUtteranceContents[UnityEngine.Random.Range(0, orderUtteranceContents.Length - 1)];
 
+        CorrectOrderDialogue();
+    }
+
+    public void CorrectOrderDialogue()
+    {
+        string temp = orderUtteranceMessage;
+        temp = temp.Replace("$RandEntree_Item", FixRecipeNames(entree.GetRecipeName()));
+        temp = temp.Replace("$RandSide_Item", FixRecipeNames(side.GetRecipeName()));
+        temp = temp.Replace("$RandDrink_Item", FixRecipeNames(drink.GetRecipeName()));
+
+
+        orderUtteranceMessage = temp;
+    }
+
+    public string interimUtteranceFile = "interimOrderUtterances";
+    private string[] interimUtteranceContents;
+    public void LoadInterimDialogue()
+    {
+        TextAsset txtAssets = (TextAsset)Resources.Load(interimUtteranceFile);
+
+        if(txtAssets != null)
+        {
+            interimUtteranceContents = (txtAssets.text.Split('\n'));
+        }
+    }
+
+    private string interimUtteranceMessage;
+    public void LoadRandomInterimDialogue()
+    {
+        interimUtteranceMessage = interimUtteranceContents[UnityEngine.Random.Range(0, interimUtteranceContents.Length)];
+
+        CorrectInterimDialogue();
+    }
+
+    public void CorrectInterimDialogue()
+    {
+        string temp = interimUtteranceMessage;
+        temp = temp.Replace("$RandEntree_Item", FixRecipeNames(entree.GetRecipeName()));
+        temp = temp.Replace("$RandSide_Item", FixRecipeNames(side.GetRecipeName()));
+        temp = temp.Replace("$RandDrink_Item", FixRecipeNames(drink.GetRecipeName()));
+
+
+        interimUtteranceMessage = temp;
+    }
+
+    public string FixRecipeNames(string recipeName)
+    {
+        return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(recipeName.ToLower());
     }
 
 }

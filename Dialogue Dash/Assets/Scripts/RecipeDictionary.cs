@@ -4,7 +4,7 @@ using UnityEngine;
 using recipes;
 using ingredients;
 
-public class RecipeDictionary 
+public class RecipeDictionary
 {
     private List<Recipe> entrees = new List<Recipe>();
     private List<Recipe> sides = new List<Recipe>();

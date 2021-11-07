@@ -1,0 +1,9 @@
+Hi, good afternoon. I'll get the $RandEntree_Item with $RandSide_Item and a $RandDrink_Item.
+Hey, I'll have the $RandEntree_Item with $RandSide_Item and a $RandDrink_Item.
+Hi. Get me the $RandEntree_Item with $RandSide_Item and a $RandDrink_Item.
+Hello.. Could I try the $RandEntree_Item with $RandSide_Item and a $RandDrink_Item?
+Hey! I've heard you guys have $RandEntree_Item here! Could I get that with $RandSide_Item and a $RandDrink_Item.
+Hi. Could I try the $RandEntree_Item with $RandSide_Item and a $RandDrink_Item?
+Hey, $RandEntree_Item with $RandSide_Item and a $RandDrink_Item.
+$RandEntree_Item with $RandSide_Item and a $RandDrink_Item.
+$RandEntree_Item with $RandSide_Item and a $RandDrink_Item. Please don't speak to me.
