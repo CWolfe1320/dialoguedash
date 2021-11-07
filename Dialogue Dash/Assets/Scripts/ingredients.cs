@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ingredients
 {
-    abstract class Ingredient //BASE CLASS
+    public abstract class Ingredient //BASE CLASS
     {
 
         protected string ingredientName;
