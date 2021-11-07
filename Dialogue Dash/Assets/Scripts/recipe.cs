@@ -45,6 +45,9 @@ namespace recipes
             return finalPrice;
         }
 
+        public bool compareRecipe(Recipe recipe){
+            if(this.recipeName = recipe.recipeName);
+        }
     }
 
 

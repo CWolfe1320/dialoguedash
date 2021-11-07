@@ -1,19 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Cook : Interactable
 {   
-    // [SerializeField] private Wit wit;
+    [SerializeField]
+    TextMeshProUGUI dialogue;
 
-    // 
+    [SerializeField]
+    GameObject dialogueBox;
+
+    // [SerializeField]
+    // Wit wit;
+
+    private string dialogueText = "Listening...";
+
+
+    private Order order;
+    private RecipeDictionary recipeDict;
     private Queue<Order> pendingOrders = new Queue<Order>();
     private Order activeOrder;
 
+    
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        dialogueBox.SetActive(true);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        dialogueBox.SetActive(false);
+    }
+
+
+    // 
+    
+
     public override void Interact(){
-        // TODO
-        Order newOrder = listenToPlayer();
-        addOrder(newOrder);
+        
+        dialogue.text = dialogueText;
+        
     }
 
     //Adds order to the pending order queue
