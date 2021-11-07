@@ -8,6 +8,7 @@ public class Order : MonoBehaviour
 {
     public int table; 
     public List<Recipe> items = new List<Recipe>(); 
+    
     double finalPrice;
     [SerializeField]Sprite tray; 
     //TODO
