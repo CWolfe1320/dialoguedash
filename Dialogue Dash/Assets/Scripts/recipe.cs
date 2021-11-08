@@ -49,6 +49,7 @@ namespace recipes
         {
             return recipeName;
         }
+        
         public bool compareRecipe(Recipe comparedRecipe){
             return recipeName.Equals(comparedRecipe.GetRecipeName());
         }

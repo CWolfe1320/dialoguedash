@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using recipes;
+
 
 public class Cook : Interactable
 {   
@@ -20,9 +22,28 @@ public class Cook : Interactable
     private Order order;
     private RecipeDictionary recipeDict;
     private Queue<Order> pendingOrders = new Queue<Order>();
-    private Order activeOrder;
-
     
+    //Currently active order
+    private Order activeOrder;
+    List<Recipe> activeRecipes = new List<Recipe>();
+
+    private bool cooking = false;
+    //The current instructions for orders in a queue
+    Queue<string> activeOrderInstructions = new Queue<string>();
+    Queue<Recipe> acriveOrderRecipes = new Queue<Recipe>();
+
+    //Timer for how long an ingredient takes to cook 
+    private float cookingTimer = 7;
+
+    //Order ready to be delivered 
+    public Order cookedOrder;
+    public bool orderReady = false;
+
+    //Flags for entrees, sides, and drinks
+    private bool entreeIncluded = false;
+    private bool sideIncluded = false;
+    private bool drinkIncluded = false;
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -36,12 +57,52 @@ public class Cook : Interactable
 
 
     
-
+    //What to do on interact
     public override void Interact(){
-        
-        dialogue.text = dialogueText;
-        
+        if(!orderReady && cooking){
+            dialogue.text = "I'm busy you dimwit";
+            return;
+        }
+        if(orderReady){
+            GameObject player = GameObject.Find("player");
+            Player playerScript = player.GetComponent<Player>();
+            playerScript.setOrder(cookedOrder);
+            string orderString = "Order of ";
+            foreach(Recipe rec in playerScript.getOrder().getItems()){
+                    orderString += rec.GetRecipeName() + " "; 
+            }
+            orderString += orderString + " ready.";
+            dialogue.text = orderString;
+
+            Debug.Log(orderReady);
+            //Reset order after player retrieves order;
+            orderReady = false;
+            entreeIncluded = false;
+            sideIncluded = false;
+            drinkIncluded = false;
+            activeOrder = new Order();
+            activeRecipes.Clear();
+            return; 
+        }
+
+        //Insert recipes into a list from the user utterance. 
+        activeRecipes.Add(instRecipe("cluckin burger"));
+        activeRecipes.Add(instRecipe("drink"));
+        activeRecipes.Add(instRecipe("natural-cut fries"));
+
+    
+        if(entreeIncluded && drinkIncluded && sideIncluded && !orderReady){
+            activeOrder = new Order(activeRecipes);
+            generateCookInstructions();
+            cooking = true;
+
+        }
+
     }
+    
+        
+        
+
 
     //Adds order to the pending order queue
     private void addOrder(Order newOrder) {
@@ -49,25 +110,16 @@ public class Cook : Interactable
             pendingOrders.Enqueue(newOrder);
     }
 
-    //Flags for entrees, sides, and drinks
-    private bool entreeIncluded = false;
-    private bool sideIncluded = false;
-    private bool drinks = false;
 
     private Order listenToPlayer() {
-        List<Recipe> understoodItems = new List<Recipe>();
-
         string text = "[wit retrieved text]";
-
-
-
        
         Order newOrder = new Order();
         return newOrder;
     }
 
 
-    private Recipes instRecipe(string recipeString){
+    private Recipe instRecipe(string recipeString){
         Recipe addedRecipe;
         switch (recipeString){
             case "cluckin burger":
@@ -136,8 +188,10 @@ public class Cook : Interactable
 
 
     private void setActiveOrder() {
-        if(activeOrder == null)
+        if(activeOrder == null){
             activeOrder = pendingOrders.Dequeue();
+            cooking = true;
+        }
         return;
     }
 
@@ -146,5 +200,59 @@ public class Cook : Interactable
         return false;
     }
 
-    //Invoke repeating for cooking tasks (ingredients)
+    private void generateCookInstructions(){
+    
+        //For each recipe in order
+        foreach (Recipe rec in activeOrder.getItems()){
+            
+            //For each Ingredient in recipe add the storage location and default instruction string. 
+            if (rec.GetPrepInstructions().Count == 0)
+                continue;
+            foreach(var ing in rec.GetPrepInstructions()){
+                List<string> prepInstructions = ing.Value;
+                foreach(string prepInst in prepInstructions){
+                    activeOrderInstructions.Enqueue("*Chef is currently prepping " + ing.Key.GetIngredientName() + " at the " + prepInst + " for the " + rec.GetRecipeName() + "*");               
+                }
+            }
+        }
+    }
+
+    public void cookIngredient(){
+        if(activeOrderInstructions.Count > 0)
+            dialogue.text = activeOrderInstructions.Dequeue(); 
+    }
+
+
+    public bool isCooking(){
+        return cooking;
+    }
+
+    public Queue<string> getCookInstructions(){
+        return activeOrderInstructions;
+    }
+
+    public Order getReadyOrder(){
+        return cookedOrder;
+    }
+
+    void FixedUpdate(){
+        if (cookingTimer > 0 && cooking)
+        {
+            cookingTimer -= Time.deltaTime;
+        }
+        else{
+            if(activeOrderInstructions.Count > 0){
+                cookIngredient();
+            }
+            else if(activeOrderInstructions.Count == 0 && cooking){
+                cookedOrder = activeOrder;
+                orderReady = true;
+                cooking = false;
+            }
+            cookingTimer = 7; 
+        }
+    }
+   
+
+
 }

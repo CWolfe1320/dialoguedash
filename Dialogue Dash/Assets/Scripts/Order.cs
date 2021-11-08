@@ -6,9 +6,9 @@ using UnityEngine.UI;
 using System;
 using System.Text.RegularExpressions;
 
-public class Order : MonoBehaviour
+public class Order 
 {
-    public int tableNo; 
+    //public int tableNo; 
     public List<Recipe> items = new List<Recipe>(); 
     
     public double finalPrice;
@@ -18,10 +18,11 @@ public class Order : MonoBehaviour
 
     }
 
-    public Order(string tableString, List<Recipe> orderItems){
+    //Constructor for orders give a list of recipes. Commented out code to include table numbers. 
+    public Order(List<Recipe> orderItems){
         this.items = orderItems;
-        string temp = Regex.Replace(tableString, "[^0-9 _]", "");
-        int.TryParse(temp, out tableNo);
+        //string temp = Regex.Replace(tableString, "[^0-9 _]", "");
+        //int.TryParse(temp, out tableNo);
     }
 
     //Generates the final price. 
