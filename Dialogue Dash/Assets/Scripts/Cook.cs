@@ -22,6 +22,9 @@ public class Cook : Interactable
     [SerializeField]
     GameObject tray;
 
+    [SerializeField]
+    GameObject playerTray;
+
     private string dialogueText = "Listening...";
 
 
@@ -58,6 +61,7 @@ public class Cook : Interactable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        dialogue.text = "Press E to interact...";
         dialogueBox.SetActive(true);
     }
 
@@ -94,6 +98,7 @@ public class Cook : Interactable
             dialogue.text = orderString;
 
             tray.SetActive(false);
+            playerTray.SetActive(true);
             //Reset order after player retrieves order;
             orderReady = false;
             entreeIncluded = false;

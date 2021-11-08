@@ -14,6 +14,9 @@ public class Customer : Interactable
     [SerializeField]
     GameObject dialogueBox;
 
+    [SerializeField]
+    GameObject playerTray, tableTray;
+
     private string dialogueText;
 
 
@@ -26,10 +29,24 @@ public class Customer : Interactable
 
     bool orderStarted = false;
 
+    
+
     public override void Interact(){
 
+        GameObject player = GameObject.Find("player");
+        Player playerScript = player.GetComponent<Player>();
 
-        if (orderStarted)
+        if (orderStarted && playerScript.holdingOrder)
+        {
+            playerTray.SetActive(false);
+            tableTray.SetActive(true);
+            playerScript.holdingOrder = false;
+            orderStarted = false;
+
+            dialogue.text = "This looks delicious! Thank you!";
+        }
+
+        else if (orderStarted)
         {
             LoadInterimDialogue();
             LoadRandomInterimDialogue();
@@ -45,6 +62,8 @@ public class Customer : Interactable
 
             dialogue.text = orderUtteranceMessage;
             orderStarted = true;
+
+            tableTray.SetActive(false);
         }
 
         
@@ -52,6 +71,7 @@ public class Customer : Interactable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        dialogue.text = "Press E to interact...";
         dialogueBox.SetActive(true);
     }
 
