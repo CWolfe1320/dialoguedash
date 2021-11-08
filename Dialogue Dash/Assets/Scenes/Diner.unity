@@ -328,6 +328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue: {fileID: 0}
   dialogueBox: {fileID: 0}
+  orderReady: 0
 --- !u!212 &12782787
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -786,7 +787,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 'Press E to interact. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -2157,6 +2158,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue: {fileID: 400636531}
   dialogueBox: {fileID: 884191302}
+  orderUtteranceFile: initialOrderUtterances
+  interimUtteranceFile: interimOrderUtterances
 --- !u!1 &1001292842
 GameObject:
   m_ObjectHideFlags: 0
@@ -2266,8 +2269,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
-  orderUtteranceFile: initialOrderUtterances
-  interimUtteranceFile: interimOrderUtterances
 --- !u!1 &1041150963
 GameObject:
   m_ObjectHideFlags: 0
@@ -8295,7 +8296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d533a269c6215141a4ba295563066a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heldOrder: {fileID: 0}
+  holdingOrder: 0
 --- !u!1 &1910994875
 GameObject:
   m_ObjectHideFlags: 0
@@ -8898,6 +8899,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue: {fileID: 400636531}
   dialogueBox: {fileID: 884191302}
+  orderReady: 0
 --- !u!61 &1976825634
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -30,8 +30,10 @@ public class Cook : Interactable
     private bool cooking = false;
     //The current instructions for orders in a queue
     Queue<string> activeOrderInstructions = new Queue<string>();
+    Queue<Recipe> acriveOrderRecipes = new Queue<Recipe>();
+
     //Timer for how long an ingredient takes to cook 
-    private float cookingTimer = 2;
+    private float cookingTimer = 7;
 
     //Order ready to be delivered 
     public Order cookedOrder;
@@ -58,16 +60,20 @@ public class Cook : Interactable
     //What to do on interact
     public override void Interact(){
         if(!orderReady && cooking){
-            Debug.Log("I'm busy, you dimwit");
+            dialogue.text = "I'm busy you dimwit";
             return;
         }
         if(orderReady){
             GameObject player = GameObject.Find("player");
             Player playerScript = player.GetComponent<Player>();
             playerScript.setOrder(cookedOrder);
+            string orderString = "Order of ";
             foreach(Recipe rec in playerScript.getOrder().getItems()){
-                    Debug.Log(rec.GetRecipeName());
+                    orderString += rec.GetRecipeName() + " "; 
             }
+            orderString += orderString + " ready.";
+            dialogue.text = orderString;
+
             Debug.Log(orderReady);
             //Reset order after player retrieves order;
             orderReady = false;
@@ -84,16 +90,12 @@ public class Cook : Interactable
         activeRecipes.Add(instRecipe("drink"));
         activeRecipes.Add(instRecipe("natural-cut fries"));
 
-        //You have an entree, side, and drink and an order is not currently ready.
-        Debug.Log("Entree: " + entreeIncluded);
-        Debug.Log("Drink: " + drinkIncluded);
-        Debug.Log("Side: " + sideIncluded);
-        Debug.Log("Order Ready: " + orderReady);
     
         if(entreeIncluded && drinkIncluded && sideIncluded && !orderReady){
             activeOrder = new Order(activeRecipes);
             generateCookInstructions();
             cooking = true;
+
         }
 
     }
@@ -202,13 +204,14 @@ public class Cook : Interactable
     
         //For each recipe in order
         foreach (Recipe rec in activeOrder.getItems()){
+            
             //For each Ingredient in recipe add the storage location and default instruction string. 
             if (rec.GetPrepInstructions().Count == 0)
                 continue;
             foreach(var ing in rec.GetPrepInstructions()){
                 List<string> prepInstructions = ing.Value;
                 foreach(string prepInst in prepInstructions){
-                    activeOrderInstructions.Enqueue(prepInst);                
+                    activeOrderInstructions.Enqueue("*Chef is currently prepping " + ing.Key.GetIngredientName() + " at the " + prepInst + " for the " + rec.GetRecipeName() + "*");               
                 }
             }
         }
@@ -216,7 +219,7 @@ public class Cook : Interactable
 
     public void cookIngredient(){
         if(activeOrderInstructions.Count > 0)
-            Debug.Log(activeOrderInstructions.Dequeue());
+            dialogue.text = activeOrderInstructions.Dequeue(); 
     }
 
 
@@ -246,7 +249,7 @@ public class Cook : Interactable
                 orderReady = true;
                 cooking = false;
             }
-            cookingTimer = 2; 
+            cookingTimer = 7; 
         }
     }
    
