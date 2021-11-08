@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.facebook.witai": {
-      "version": "file:C:/Users/corey/Documents/wit-unity-repaired-dir-structure",
+      "version": "file:C:/Users/danie/Documents/wit-unity-repaired-dir-structure",
       "depth": 0,
       "source": "local",
       "dependencies": {}

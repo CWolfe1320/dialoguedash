@@ -4,7 +4,7 @@ using ingredients;
 
 namespace recipes
 {
-    abstract class Recipe //BASE CLASS
+    public abstract class Recipe //BASE CLASS
     {
         protected string recipeName;
 
@@ -43,6 +43,11 @@ namespace recipes
         public double GetFinalPrice()
         {
             return finalPrice;
+        }
+
+        public string GetRecipeName()
+        {
+            return recipeName;
         }
 
     }

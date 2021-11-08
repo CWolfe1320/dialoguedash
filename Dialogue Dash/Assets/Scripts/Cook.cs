@@ -1,46 +1,42 @@
+using Facebook.WitAi;
+using Facebook.WitAi.Lib;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Cook : Interactable
-{   
-    // [SerializeField] private Wit wit;
+{
+    [SerializeField] private Wit wit;
 
-    // 
-    private Queue<Order> pendingOrders = new Queue<Order>();
-    private Order activeOrder;
+    [SerializeField]
+    TextMeshProUGUI dialogue;
 
-    public override void Interact(){
-        // TODO
-        Order newOrder = listenToPlayer();
-        addOrder(newOrder);
+    [SerializeField]
+    GameObject dialogueBox;
+
+    private void OnValidate()
+    {
+        if (!wit) wit = GetComponent<Wit>();
     }
 
-    //Adds order to the pending order queue
-    private void addOrder(Order newOrder) {
-        if(isOrderValid(newOrder))
-            pendingOrders.Enqueue(newOrder);
+    public override void Interact()
+    {
+        wit.Activate();
     }
 
-    private Order listenToPlayer() {
-        // TODO
-        /*
-        var response = wit.activate(); 
-        */
-        Order newOrder = new Order();
-        return newOrder;
+    public void addOrder(WitResponseNode resp)
+    {
+        dialogue.text = WitResultUtilities.GetIntentName(resp) + " " +  WitResultUtilities.GetFirstEntityValue(resp, "menu_item:menu_item");
     }
 
-    private void setActiveOrder() {
-        if(activeOrder == null)
-            activeOrder = pendingOrders.Dequeue();
-        return;
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        dialogueBox.SetActive(true);
     }
 
-    private bool isOrderValid(Order order) {
-        // TODO
-        return false;
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        dialogueBox.SetActive(false);
     }
-
-    //Invoke repeating for cooking tasks (ingredients)
 }

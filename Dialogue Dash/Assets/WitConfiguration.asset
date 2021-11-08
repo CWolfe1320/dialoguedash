@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae5a46bda3295124c99b0e6537ac7252, type: 3}
+  m_Name: WitConfiguration
+  m_EditorClassIdentifier: 
+  application:
+    witConfiguration: {fileID: 0}
+    name: dialogue_dash
+    id: 2117184895117007
+    lang: en
+    isPrivate: 0
+    createdAt: 2021-10-12T22:29:15-0700
+  configId: b81c08c6c1b7c2a46ba9affb59e1c205
+  clientAccessToken: 6S3ZJ2Z46TLR2MJKZMF4PVPDUQKWS2LI
+  timeoutMS: 10000
+  endpointConfiguration:
+    uriScheme: 
+    authority: 
+    port: 0
+    witApiVersion: 
+    speech: 
+    message: 
+  entities:
+  - witConfiguration: {fileID: 11400000}
+    id: 160614109607158
+    name: dining_table
+    lookups:
+    - keywords
+    roles:
+    - 
+    keywords:
+    - keyword: Table one
+      synonyms:
+      - cable 1
+      - cable one
+      - table 1
+      - table one
+    - keyword: Table three
+      synonyms:
+      - cable 3
+      - cable three
+      - table 3
+      - table three
+    - keyword: Table two
+      synonyms:
+      - cable 2
+      - cable two
+      - table 2
+      - table two
+  - witConfiguration: {fileID: 11400000}
+    id: 594819041673310
+    name: menu_item
+    lookups:
+    - keywords
+    roles:
+    - 
+    - 
+    keywords:
+    - keyword: Burgeroisie
+      synonyms:
+      - burgeroisie
+    - keyword: Drink
+      synonyms:
+      - drink
+    - keyword: Hamburger
+      synonyms:
+      - hamburger
+    - keyword: I can't believe it's not burger
+      synonyms:
+      - i can't believe it's not burger
+    - keyword: The Dasher
+      synonyms:
+      - the dasher
+    - keyword: cheeseburger
+      synonyms:
+      - cheeseburger
+    - keyword: cluckin burger
+      synonyms:
+      - buckin burger
+      - bucking burger
+      - clicking burger
+      - cluckin burger
+      - clucking burger
+    - keyword: eggers can be cheesers
+      synonyms:
+      - eggers can be cheesers
+      - eggs can be cheesers
+    - keyword: mozzarella sticks
+      synonyms:
+      - mozzarella sticks
+    - keyword: natural-cut fries
+      synonyms:
+      - fries
+      - natural cut fries
+      - natural-cut fries
+    - keyword: onion rings
+      synonyms:
+      - onion rings
+    - keyword: side salad
+      synonyms:
+      - side salad
+  intents:
+  - witConfiguration: {fileID: 11400000}
+    id: 3046968402227036
+    name: greeting
+    entities: []
+  - witConfiguration: {fileID: 11400000}
+    id: 430899201787889
+    name: order_food
+    entities:
+    - witConfiguration: {fileID: 11400000}
+      id: 999188923972089
+      name: dining_table:dining_table
+      lookups: []
+      roles: []
+      keywords: []
+    - witConfiguration: {fileID: 11400000}
+      id: 1284022332058798
+      name: menu_item:menu_item
+      lookups: []
+      roles: []
+      keywords: []
+  - witConfiguration: {fileID: 11400000}
+    id: 235408921986132
+    name: take_order
+    entities: []
+  traits:
+  - witConfiguration: {fileID: 11400000}
+    id: 1210601082766191
+    name: welcome
+    values: []
+  - witConfiguration: {fileID: 0}
+    id: 
+    name: 
+    values: []
+  - witConfiguration: {fileID: 0}
+    id: 
+    name: 
+    values: []
