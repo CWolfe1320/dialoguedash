@@ -1,8 +1,11 @@
+using Facebook.WitAi;
+using Facebook.WitAi.Lib;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using recipes;
+using ingredients;
 
 
 public class Cook : Interactable
@@ -13,8 +16,11 @@ public class Cook : Interactable
     [SerializeField]
     GameObject dialogueBox;
 
-    // [SerializeField]
-    // Wit wit;
+    [SerializeField]
+    private Wit wit;
+
+    [SerializeField]
+    GameObject tray;
 
     private string dialogueText = "Listening...";
 
@@ -31,9 +37,10 @@ public class Cook : Interactable
     //The current instructions for orders in a queue
     Queue<string> activeOrderInstructions = new Queue<string>();
     Queue<Recipe> acriveOrderRecipes = new Queue<Recipe>();
+    List<string> witOrder = new List<string>();
 
     //Timer for how long an ingredient takes to cook 
-    private float cookingTimer = 7;
+    private float cookingTimer = 4;
 
     //Order ready to be delivered 
     public Order cookedOrder;
@@ -44,6 +51,10 @@ public class Cook : Interactable
     private bool sideIncluded = false;
     private bool drinkIncluded = false;
 
+    private void OnValidate()
+    {
+        if (!wit) wit = GetComponent<Wit>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -53,6 +64,14 @@ public class Cook : Interactable
     private void OnTriggerExit2D(Collider2D collision)
     {
         dialogueBox.SetActive(false);
+    }
+
+    public void addOrder(WitResponseNode resp)
+    {   
+        var arr = resp["entities"]["menu_item:menu_item"];
+        for(int i = 0; i < arr.Count; i++) {
+            witOrder.Add(arr[i]["value"].Value);
+        }
     }
 
 
@@ -74,7 +93,7 @@ public class Cook : Interactable
             orderString += orderString + " ready.";
             dialogue.text = orderString;
 
-            Debug.Log(orderReady);
+            tray.SetActive(false);
             //Reset order after player retrieves order;
             orderReady = false;
             entreeIncluded = false;
@@ -84,11 +103,13 @@ public class Cook : Interactable
             activeRecipes.Clear();
             return; 
         }
+        //Supposed to work but doesn't 
+        //wit.Activate();
 
         //Insert recipes into a list from the user utterance. 
-        activeRecipes.Add(instRecipe("cluckin burger"));
-        activeRecipes.Add(instRecipe("drink"));
-        activeRecipes.Add(instRecipe("natural-cut fries"));
+        foreach(string wOrder in witOrder){
+            activeRecipes.Add(instRecipe(wOrder));
+        }
 
     
         if(entreeIncluded && drinkIncluded && sideIncluded && !orderReady){
@@ -170,16 +191,46 @@ public class Cook : Interactable
                     return new SideSalad();
                 }
                 break;
-            case "natural-cut fries":
+            case "fries":
                 if(!sideIncluded){
                     sideIncluded = true;
                     return new Fries();
                 }
                 break;
-            case "drink": 
+            case "water": 
                 if(!drinkIncluded){
                     drinkIncluded = true;
-                    return new Drink();
+                    return new recipes.Drink(new Water());
+                }
+                break;
+            case "coke": 
+                if(!drinkIncluded){
+                    drinkIncluded = true;
+                    return new recipes.Drink(new Coke());
+                }
+                break;
+            case "sprite": 
+                if(!drinkIncluded){
+                    drinkIncluded = true;
+                    return new recipes.Drink(new ingredients.Sprite());
+                }
+                break;
+            case "dr. pepper": 
+                if(!drinkIncluded){
+                    drinkIncluded = true;
+                    return new recipes.Drink(new DrPepper());
+                }
+                break;
+            case "coffee": 
+                if(!drinkIncluded){
+                    drinkIncluded = true;
+                    return new recipes.Drink(new Coffee());
+                }
+                break;
+            case "tea": 
+                if(!drinkIncluded){
+                    drinkIncluded = true;
+                    return new recipes.Drink(new Tea());
                 }
                 break;
         }
@@ -247,9 +298,10 @@ public class Cook : Interactable
             else if(activeOrderInstructions.Count == 0 && cooking){
                 cookedOrder = activeOrder;
                 orderReady = true;
+                tray.SetActive(true);
                 cooking = false;
             }
-            cookingTimer = 7; 
+            cookingTimer = 4; 
         }
     }
    
