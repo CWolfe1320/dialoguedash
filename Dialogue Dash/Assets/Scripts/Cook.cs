@@ -110,12 +110,7 @@ public class Cook : Interactable
 
 
     private Order listenToPlayer() {
-        List<Recipe> understoodItems = new List<Recipe>();
-
         string text = "[wit retrieved text]";
-
-
-
        
         Order newOrder = new Order();
         return newOrder;
