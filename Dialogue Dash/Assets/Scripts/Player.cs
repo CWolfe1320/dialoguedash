@@ -9,4 +9,8 @@ public class Player : MonoBehaviour
     public Order getOrder(){
         return heldOrder;
     }
+
+    public void setOrder(Order customerOrder){
+        heldOrder = customerOrder;
+    }
 }
