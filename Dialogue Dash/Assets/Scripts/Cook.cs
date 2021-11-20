@@ -50,10 +50,12 @@ public class Cook : Interactable
     public bool orderReady = false;
 
     //Flags for entrees, sides, and drinks
-    private bool entreeIncluded = false;
-    private bool sideIncluded = false;
-    private bool drinkIncluded = false;
+    public bool entreeIncluded = false;
+    public bool sideIncluded = false;
+    public bool drinkIncluded = false;
 
+
+    
     private void OnValidate()
     {
         if (!wit) wit = GetComponent<Wit>();
@@ -61,7 +63,7 @@ public class Cook : Interactable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        dialogue.text = "Press E to interact...";
+        dialogue.text = "Chef: What ya need?";
         dialogueBox.SetActive(true);
     }
 
@@ -72,6 +74,7 @@ public class Cook : Interactable
 
     public void addOrder(WitResponseNode resp)
     {   
+        witOrder.Clear();
         var arr = resp["entities"]["menu_item:menu_item"];
         for(int i = 0; i < arr.Count; i++) {
             witOrder.Add(arr[i]["value"].Value);
@@ -94,7 +97,7 @@ public class Cook : Interactable
             foreach(Recipe rec in playerScript.getOrder().getItems()){
                     orderString += rec.GetRecipeName() + " "; 
             }
-            orderString += orderString + " ready.";
+            orderString +=  " ready.";
             dialogue.text = orderString;
 
             tray.SetActive(false);
@@ -118,10 +121,25 @@ public class Cook : Interactable
 
     
         if(entreeIncluded && drinkIncluded && sideIncluded && !orderReady){
+            dialogue.text = "Comin' right up!";
             activeOrder = new Order(activeRecipes);
             generateCookInstructions();
             cooking = true;
 
+        }
+        else{
+            if(!entreeIncluded && !sideIncluded && !drinkIncluded){
+                dialogue.text = "Just standin' here twiddlin' ma' thumbs";
+            }
+            else if(!entreeIncluded){
+                dialogue.text = "Did they want an entree with that?";
+            }
+            else if(!drinkIncluded){
+                dialogue.text = "Did they want a drink with that?";
+            }
+            else if(!sideIncluded){
+                dialogue.text = "Did they want a side with that?";
+            }
         }
 
     }
@@ -160,7 +178,7 @@ public class Cook : Interactable
                     return new EggersBurger();
                 }
                 break;
-            case "burgeroise":
+            case "burgeroisie":
                 if(!entreeIncluded){
                     entreeIncluded = true;
                     return new Burgeroisie();
@@ -172,13 +190,13 @@ public class Cook : Interactable
                     return new Hamburger();
                 }
                 break;
-            case "i cant believe its not burger":
+            case "i cant believe it's not burger":
                 if(!entreeIncluded){
                     entreeIncluded = true;
                     return new BelieveBurger();
                 }
                 break;
-            case "mozarrella sticks":
+            case "mozzarella sticks":
                 if(!sideIncluded){
                     sideIncluded = true;
                     return new MozzarellaSticks();
@@ -262,7 +280,7 @@ public class Cook : Interactable
         foreach (Recipe rec in activeOrder.getItems()){
             
             //For each Ingredient in recipe add the storage location and default instruction string. 
-            if (rec.GetPrepInstructions().Count == 0)
+            if (rec.GetPrepInstructions().Count == null)
                 continue;
             foreach(var ing in rec.GetPrepInstructions()){
                 List<string> prepInstructions = ing.Value;

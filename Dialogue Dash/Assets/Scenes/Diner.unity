@@ -330,9 +330,12 @@ MonoBehaviour:
   dialogue: {fileID: 0}
   dialogueBox: {fileID: 0}
   wit: {fileID: 0}
-  tray: {fileID: 0}
+  tray: {fileID: 2003315355}
   playerTray: {fileID: 0}
   orderReady: 0
+  entreeIncluded: 0
+  sideIncluded: 0
+  drinkIncluded: 0
 --- !u!212 &12782787
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -791,7 +794,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Press E to interact... '
+  m_text: 'Chef: What ya need?'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -8800,8 +8803,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue: {fileID: 0}
   dialogueBox: {fileID: 0}
-  playerTray: {fileID: 0}
-  tableTray: {fileID: 0}
+  playerTray: {fileID: 828327273}
+  tableTray: {fileID: 1840980095}
   orderUtteranceFile: initialOrderUtterances
   interimUtteranceFile: interimOrderUtterances
 --- !u!1 &1934659895
@@ -8934,8 +8937,11 @@ MonoBehaviour:
   dialogueBox: {fileID: 884191302}
   wit: {fileID: 1934659896}
   tray: {fileID: 2003315355}
-  playerTray: {fileID: 0}
+  playerTray: {fileID: 828327273}
   orderReady: 0
+  entreeIncluded: 0
+  sideIncluded: 0
+  drinkIncluded: 0
 --- !u!61 &1934659899
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9122,6 +9128,9 @@ MonoBehaviour:
   tray: {fileID: 2003315355}
   playerTray: {fileID: 828327273}
   orderReady: 0
+  entreeIncluded: 0
+  sideIncluded: 0
+  drinkIncluded: 0
 --- !u!61 &1976825634
 BoxCollider2D:
   m_ObjectHideFlags: 0
