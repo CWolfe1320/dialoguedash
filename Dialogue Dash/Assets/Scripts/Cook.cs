@@ -92,14 +92,14 @@ public class Cook : Interactable
         if(orderReady){
             GameObject player = GameObject.Find("player");
             Player playerScript = player.GetComponent<Player>();
+            
             playerScript.setOrder(cookedOrder);
             string orderString = "Order of ";
             foreach(Recipe rec in playerScript.getOrder().getItems()){
-                    orderString += rec.GetRecipeName() + " "; 
+                    orderString += rec.GetRecipeName() + " ";
             }
             orderString +=  " ready.";
             dialogue.text = orderString;
-
             tray.SetActive(false);
             playerTray.SetActive(true);
             //Reset order after player retrieves order;
@@ -112,7 +112,7 @@ public class Cook : Interactable
             return; 
         }
         //Supposed to work but doesn't 
-        //wit.Activate();
+        wit.Activate();
 
         //Insert recipes into a list from the user utterance. 
         foreach(string wOrder in witOrder){
@@ -170,6 +170,13 @@ public class Cook : Interactable
                 if(!entreeIncluded){
                     entreeIncluded = true; 
                     return new CluckinBurger();
+                }
+                break;
+            case "the dasher":
+                if (!entreeIncluded)
+                {
+                    entreeIncluded = true;
+                    return new Dasher();
                 }
                 break;
             case "eggers can be cheesers":
@@ -280,7 +287,7 @@ public class Cook : Interactable
         foreach (Recipe rec in activeOrder.getItems()){
             
             //For each Ingredient in recipe add the storage location and default instruction string. 
-            if (rec.GetPrepInstructions().Count == null)
+            if (rec.GetPrepInstructions() == null)
                 continue;
             foreach(var ing in rec.GetPrepInstructions()){
                 List<string> prepInstructions = ing.Value;
@@ -319,7 +326,9 @@ public class Cook : Interactable
                 cookIngredient();
             }
             else if(activeOrderInstructions.Count == 0 && cooking){
-                cookedOrder = activeOrder;
+                List<Recipe> tempRec = new List<Recipe>();
+                tempRec.AddRange(activeRecipes);
+                cookedOrder = new Order(tempRec);
                 orderReady = true;
                 tray.SetActive(true);
                 cooking = false;

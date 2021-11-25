@@ -1,9 +1,8 @@
-using System.Collections;
+using recipes;
 using System.Collections.Generic;
 using System.Globalization;
-using UnityEngine;
 using TMPro;
-using recipes;
+using UnityEngine;
 
 
 public class Customer : Interactable
@@ -29,7 +28,35 @@ public class Customer : Interactable
 
     bool orderStarted = false;
 
-    
+
+
+    private bool orderMatch = false;
+    public void CheckOrder(ref Player playerScript)
+    {
+        List<Recipe> activeRecipes = new List<Recipe>();
+        activeRecipes.Add(entree);
+        activeRecipes.Add(side);
+        activeRecipes.Add(drink);
+        
+        Order activeOrder = new Order(activeRecipes);
+
+        if (playerScript.getOrder().compareOrder(activeOrder))
+        {
+            orderMatch = true;
+        }
+    }
+
+    public void GetPayment(ref Player playerScript)
+    {
+        double payment = 0;
+
+        foreach (Recipe rec in playerScript.getOrder().getItems())
+        {
+            payment = payment + rec.GetFinalPrice();
+        }
+
+        playerScript.AddCash(payment);
+    }
 
     public override void Interact(){
 
@@ -39,11 +66,20 @@ public class Customer : Interactable
         if (orderStarted && playerScript.holdingOrder)
         {
             playerTray.SetActive(false);
+            CheckOrder(ref playerScript);
             tableTray.SetActive(true);
             playerScript.holdingOrder = false;
             orderStarted = false;
-
-            dialogue.text = "This looks delicious! Thank you!";
+            
+            if (orderMatch)
+            {
+                dialogue.text = "This looks delicious! Thank you!";
+                GetPayment(ref playerScript);
+            }
+            else
+            {
+                dialogue.text = "This looks tasty, but it isn't my order! I'm not paying for this!";
+            }
         }
 
         else if (orderStarted)
