@@ -14,7 +14,7 @@ public class Cook : Interactable
     TextMeshProUGUI dialogue;
 
     [SerializeField]
-    GameObject dialogueBox;
+    GameObject dialogueBox, interactBubble;
 
     [SerializeField]
     private Wit wit;
@@ -65,11 +65,13 @@ public class Cook : Interactable
     {
         dialogue.text = "Chef: What ya need?";
         dialogueBox.SetActive(true);
+        interactBubble.SetActive(true);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         dialogueBox.SetActive(false);
+        interactBubble.SetActive(false);
     }
 
     public void addOrder(WitResponseNode resp)
@@ -79,9 +81,10 @@ public class Cook : Interactable
         for(int i = 0; i < arr.Count; i++) {
             witOrder.Add(arr[i]["value"].Value);
         }
+        dialogue.text = "Press 'E' to interact...";
     }
 
-
+    private bool initialVocal = false;
     
     //What to do on interact
     public override void Interact(){
@@ -109,10 +112,15 @@ public class Cook : Interactable
             drinkIncluded = false;
             activeOrder = new Order();
             activeRecipes.Clear();
+            initialVocal = false;
             return; 
         }
-        //Supposed to work but doesn't 
-        wit.Activate();
+        if(!initialVocal)
+        {
+            wit.Activate();
+            initialVocal = true;
+        }
+            
 
         //Insert recipes into a list from the user utterance. 
         foreach(string wOrder in witOrder){
@@ -129,16 +137,19 @@ public class Cook : Interactable
         }
         else{
             if(!entreeIncluded && !sideIncluded && !drinkIncluded){
-                dialogue.text = "Just standin' here twiddlin' ma' thumbs";
+                dialogue.text = "Listening...";
             }
             else if(!entreeIncluded){
                 dialogue.text = "Did they want an entree with that?";
+                initialVocal = false;
             }
             else if(!drinkIncluded){
                 dialogue.text = "Did they want a drink with that?";
+                initialVocal = false;
             }
             else if(!sideIncluded){
                 dialogue.text = "Did they want a side with that?";
+                initialVocal = false;
             }
         }
 
