@@ -79,12 +79,17 @@ public class Cook : Interactable
         witOrder.Clear();
         var arr = resp["entities"]["menu_item:menu_item"];
         for(int i = 0; i < arr.Count; i++) {
+            Debug.Log(arr[i]["value"].Value);
             witOrder.Add(arr[i]["value"].Value);
         }
-        dialogue.text = "Press 'E' to interact...";
+        foreach(string wOrder in witOrder){
+            activeRecipes.Add(instRecipe(wOrder));
+        }
+
+        dialogue.text = "Press E to respond"; 
     }
 
-    private bool initialVocal = false;
+    public bool initialVocal = false;
     
     //What to do on interact
     public override void Interact(){
@@ -117,15 +122,13 @@ public class Cook : Interactable
         }
         if(!initialVocal)
         {
-            wit.Activate();
+            if(!entreeIncluded || !sideIncluded || !drinkIncluded)
+                wit.Activate();
             initialVocal = true;
         }
             
 
-        //Insert recipes into a list from the user utterance. 
-        foreach(string wOrder in witOrder){
-            activeRecipes.Add(instRecipe(wOrder));
-        }
+            
 
     
         if(entreeIncluded && drinkIncluded && sideIncluded && !orderReady){
@@ -133,7 +136,7 @@ public class Cook : Interactable
             activeOrder = new Order(activeRecipes);
             generateCookInstructions();
             cooking = true;
-
+            initialVocal = true;
         }
         else{
             if(!entreeIncluded && !sideIncluded && !drinkIncluded){
@@ -298,8 +301,8 @@ public class Cook : Interactable
         foreach (Recipe rec in activeOrder.getItems()){
             
             //For each Ingredient in recipe add the storage location and default instruction string. 
-            if (rec.GetPrepInstructions() == null)
-                continue;
+            // if (rec.GetPrepInstructions() == null)
+            //     continue;
             foreach(var ing in rec.GetPrepInstructions()){
                 List<string> prepInstructions = ing.Value;
                 foreach(string prepInst in prepInstructions){

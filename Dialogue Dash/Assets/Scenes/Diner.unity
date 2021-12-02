@@ -11366,7 +11366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue: {fileID: 400636531}
   dialogueBox: {fileID: 884191302}
-  interactBubble: {fileID: 0}
+  interactBubble: {fileID: 899207369}
   wit: {fileID: 1934659896}
   tray: {fileID: 2003315355}
   playerTray: {fileID: 828327273}
