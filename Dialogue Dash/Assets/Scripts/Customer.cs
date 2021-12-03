@@ -138,10 +138,9 @@ public class Customer : Interactable
 
     public void getGreeting(WitResponseNode resp)
     {
-
-        if (resp["intents"][0]["name"].Value == "greeting")
+        Debug.Log(resp["intents"][0]["name"].Value + " intent");
+        if (resp["intents"][0]["name"].Value == "take_order")
         {
-            Debug.Log("In getGreeting");
             positiveSentiment = false;
             neutralSentiment = false;
             negativeSentiment = false;
