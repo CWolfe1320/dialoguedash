@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using Facebook.WitAi;
 using Facebook.WitAi.Lib;
+using static System.Math;
 
 public class Customer : Interactable
 {
@@ -50,29 +51,38 @@ public class Customer : Interactable
         }
     }
 
-    public void GetPayment(ref Player playerScript) //ADD IN TIPPING MECHANICS!!!!!!!!!!!!!!!
+    public void GetPayment(ref Player playerScript)
     {
         double payment = 0;
+        double greetingFactor = 0;
+        double sentimentFactor = 0;
+        double welcomeFactor = 0;
+        double finalTip = 0;
 
         foreach (Recipe rec in playerScript.getOrder().getItems())
         {
             payment = payment + rec.GetFinalPrice();
         }
-        double tipPolite = payment * .2;
-        double tipAmazing = payment * .3;
+
+        if (greetingExist)
+            greetingFactor = (double) Random.Range(0.05f, 0.1f);
+        if (positiveSentiment)
+            sentimentFactor = (double) Random.Range(0.05f, 0.2f);
+        if (neutralSentiment)
+            sentimentFactor = (double) Random.Range(0.05f, 0.2f) / 2.0f;
+        if (welcomeExist)
+            welcomeFactor = (double) Random.Range(0.05f, 0.15f);
+
+        finalTip = System.Math.Round(greetingFactor + sentimentFactor + welcomeFactor, 2);
         
-        if ((positiveSentiment || greetingExist) && !negativeSentiment)
-        {
-            dialogue.text = dialogue.text + " Also, thank you for being so amazingly polite with your words and your greeting. I've added a tip of $" + tipAmazing + " to the payment.";
-            playerScript.AddCash(payment + tipAmazing);
-        }
-        else if (positiveSentiment)
-        {
-            dialogue.text = dialogue.text + " Also, thank you for being so polite. I've added a tip of $" + tipPolite + " to the payment.";
-            playerScript.AddCash(payment + tipPolite);
-        }
+        if(finalTip > 0.3)
+            dialogue.text = dialogue.text + " Also, thank you for the excellent service, I've added a tip of $" + finalTip + "to the payment!";
+        else if(finalTip > 0.2)
+            dialogue.text = dialogue.text + " Also, thanks for doing your job. I've added a tip of $" + finalTip + " to the payment.";
         else
-            playerScript.AddCash(payment);
+            dialogue.text = dialogue.text + " Also, you barely did your job, but I guess I'll be nice. I've added a tip of $" + finalTip + " to the payment.";
+
+        playerScript.AddCash(payment + finalTip);
     }
 
     public override void Interact() {
@@ -134,6 +144,7 @@ public class Customer : Interactable
     private bool neutralSentiment = false;
     private bool negativeSentiment = false;
     private bool greetingExist = false;
+    private bool welcomeExist = false;
 
 
     public void getGreeting(WitResponseNode resp)
@@ -145,6 +156,7 @@ public class Customer : Interactable
             neutralSentiment = false;
             negativeSentiment = false;
             greetingExist = false;
+            welcomeExist = false;
 
             initialSpeech = true;
 
@@ -156,9 +168,11 @@ public class Customer : Interactable
                 negativeSentiment = true;
 
             if (resp["traits"]["wit$greetings"][0]["value"].Value == "true")
-            {
                 greetingExist = true;
-            }
+
+            if (resp["traits"]["welcome"][0]["value"].Value == "true")
+                welcomeExist = true;
+
         }
         dialogue.text = "Press E to interact...";
     }
