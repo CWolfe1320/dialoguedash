@@ -25,12 +25,34 @@ public class Cook : Interactable
     [SerializeField]
     GameObject playerTray;
 
+    //Chef checkpoints
+    private GameObject df;
+    private GameObject cb;
+    private GameObject ko;
+    private GameObject f;
+    private GameObject o;
+    private GameObject p;
+    private GameObject ds;
+    private GameObject s;
+
+    //Cook movement variables
+    public float moveSpeed = 5f; 
+    public Rigidbody2D rb;
+    private Vector2 movement;
+    public float moveDuration = 4.0f;
+    private GameObject chefSprite;
+
     private string dialogueText = "Listening...";
 
 
     private Order order;
     private RecipeDictionary recipeDict;
     private Queue<Order> pendingOrders = new Queue<Order>();
+
+    //Possible locations to move for Chef
+    private static string[] tempLocations = {"deep fryer", "stove", "cutting board", "drink station", "fridge", "pantry", "oven", "deep fryer"};
+    private List<string> cookingLocations = new List<string>(tempLocations);
+    private Vector2 targetVector; 
     
     //Currently active order
     private Order activeOrder;
@@ -54,7 +76,23 @@ public class Cook : Interactable
     public bool sideIncluded = false;
     public bool drinkIncluded = false;
 
+    
+    private void Start(){
+        chefSprite = GameObject.Find("chef");
 
+        //Chef checkpoints
+        df = GameObject.Find("dfCheckpoint");
+        cb = GameObject.Find("cbCheckpoint");
+        ko = GameObject.Find("koCheckpoint");
+        f = GameObject.Find("fCheckpoint");
+        o = GameObject.Find("oCheckpoint");
+        p = GameObject.Find("pCheckpoint");
+        ds = GameObject.Find("dsCheckpoint");
+        s = GameObject.Find("sCheckpoint");
+
+        targetVector = ko.transform.position;
+    
+    }
     
     private void OnValidate()
     {
@@ -86,7 +124,7 @@ public class Cook : Interactable
             activeRecipes.Add(instRecipe(wOrder));
         }
 
-        dialogue.text = "Press E to respond"; 
+        Interact(); 
     }
 
     public bool initialVocal = false;
@@ -141,6 +179,7 @@ public class Cook : Interactable
         else{
             if(!entreeIncluded && !sideIncluded && !drinkIncluded){
                 dialogue.text = "Listening...";
+                initialVocal = false;
             }
             else if(!entreeIncluded){
                 dialogue.text = "Did they want an entree with that?";
@@ -322,6 +361,53 @@ public class Cook : Interactable
         return cooking;
     }
 
+    public void findTargetLocation(){
+        if(activeOrderInstructions.Count > 0){
+            string inst = activeOrderInstructions.Peek();
+            string target = "";
+            foreach(string location in cookingLocations){
+                if(inst.Contains(location)){
+                    target = location;
+                }
+            }
+            switch(target){
+                case "deep fryer":
+                    targetVector = df.transform.position;
+                    return;
+                    break;
+                case "cutting board":
+                    targetVector = cb.transform.position;
+                    return;
+                    break;
+                case "fridge":
+                    targetVector = f.transform.position;
+                    return;
+                    break;
+                case "oven":
+                    targetVector = o.transform.position;
+                    return;
+                    break;
+                case "pantry":
+                    targetVector = p.transform.position;
+                    return;
+                    break;
+                case "stove":       
+                    targetVector = s.transform.position;
+                    return;
+                    break;
+                case "drink station": 
+                    targetVector = ds.transform.position;
+                    return;
+                    break;
+            }
+        }
+        else{
+            targetVector = ko.transform.position;
+            return;
+        }
+        return;
+    }
+
     public Queue<string> getCookInstructions(){
         return activeOrderInstructions;
     }
@@ -330,13 +416,20 @@ public class Cook : Interactable
         return cookedOrder;
     }
 
+    
+
+    float t = 0;
+
     void FixedUpdate(){
+        findTargetLocation();
         if (cookingTimer > 0 && cooking)
-        {
-            cookingTimer -= Time.deltaTime;
+        {   
+             t += Time.deltaTime;  
+            cookingTimer -= Time.deltaTime;   
         }
         else{
             if(activeOrderInstructions.Count > 0){
+                t =  0;
                 cookIngredient();
             }
             else if(activeOrderInstructions.Count == 0 && cooking){
@@ -346,10 +439,17 @@ public class Cook : Interactable
                 orderReady = true;
                 tray.SetActive(true);
                 cooking = false;
+                t = 0;
             }
+            
             cookingTimer = 4; 
         }
+        
+       
+        float percentageComplete = t/moveDuration;
+        chefSprite.transform.position = Vector2.Lerp(chefSprite.transform.position, targetVector, Mathf.SmoothStep(0,1, percentageComplete));
     }
+    
    
 
 
