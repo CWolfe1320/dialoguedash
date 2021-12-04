@@ -6,20 +6,25 @@ public class MenuBoard : Interactable
 {
 
     [SerializeField]
-    GameObject menuUI;
+    GameObject menuUI, interactBubble;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        menuUI.SetActive(true);
+        interactBubble.SetActive(true);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        menuUI.SetActive(false);
+        interactBubble.SetActive(false);
     }
 
     public override void Interact()
     {
-        Debug.Log("Works!");
+        menuUI.SetActive(true);
+    }
+
+    public void close()
+    {
+        menuUI.SetActive(false);
     }
 }
