@@ -114,17 +114,18 @@ public class Cook : Interactable
 
     public void addOrder(WitResponseNode resp)
     {   
-        witOrder.Clear();
-        var arr = resp["entities"]["menu_item:menu_item"];
-        for(int i = 0; i < arr.Count; i++) {
-            Debug.Log(arr[i]["value"].Value);
-            witOrder.Add(arr[i]["value"].Value);
+        if (resp["intents"][0]["name"].Value == "order_food"){
+            witOrder.Clear();
+            var arr = resp["entities"]["menu_item:menu_item"];
+            for(int i = 0; i < arr.Count; i++) {
+                Debug.Log(arr[i]["value"].Value);
+                witOrder.Add(arr[i]["value"].Value);
+            }
+            foreach(string wOrder in witOrder){
+                activeRecipes.Add(instRecipe(wOrder));
+            }
+            Interact();
         }
-        foreach(string wOrder in witOrder){
-            activeRecipes.Add(instRecipe(wOrder));
-        }
-
-        Interact(); 
     }
 
     public bool initialVocal = false;
