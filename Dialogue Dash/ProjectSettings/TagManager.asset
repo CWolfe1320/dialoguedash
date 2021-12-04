@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Checkpoints
+    uniqueID: 2460171671
+    locked: 0
   - name: Background
     uniqueID: 1669481131
     locked: 0
