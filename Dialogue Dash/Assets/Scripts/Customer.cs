@@ -252,7 +252,7 @@ public class Customer : Interactable
 
     public void LoadRandomOrderDialogue()
     {
-        orderUtteranceMessage = greetingUtteranceContents[UnityEngine.Random.Range(0, orderUtteranceContents.Length - 1)];
+        orderUtteranceMessage = greetingUtteranceContents[UnityEngine.Random.Range(1, orderUtteranceContents.Length - 1)];
         orderUtteranceMessage = orderUtteranceMessage.Substring(0,orderUtteranceMessage.Length-1) + " ";
 
         orderUtteranceMessage = orderUtteranceMessage + orderUtteranceContents[UnityEngine.Random.Range(0, orderUtteranceContents.Length - 1)];
