@@ -124,7 +124,7 @@ public class Cook : Interactable
             foreach(string wOrder in witOrder){
                 activeRecipes.Add(instRecipe(wOrder));
             }
-            Interact();
+            
         }
     }
 
