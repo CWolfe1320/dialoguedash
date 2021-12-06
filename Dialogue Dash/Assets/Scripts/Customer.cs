@@ -79,10 +79,12 @@ public class Customer : Interactable
         
         if(tipPercentage > 0.3)
             dialogue.text = dialogue.text + " Also, thank you for the excellent service, I've added a tip of $" + finalTip + " to the payment!";
-        else if(tipPercentage > 0.2)
+        else if(tipPercentage > 0.14)
             dialogue.text = dialogue.text + " Also, thanks for doing your job. I've added a tip of $" + finalTip + " to the payment.";
-        else
+        else if(tipPercentage > 0)
             dialogue.text = dialogue.text + " Also, you barely did your job, but I guess I'll be nice. I've added a tip of $" + finalTip + " to the payment.";
+        else
+            dialogue.text = dialogue.text + " Also, the service here was terrible so you aren't getting a tip.";
 
         playerScript.AddCash(payment + finalTip);
     }
