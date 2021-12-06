@@ -57,6 +57,7 @@ public class Customer : Interactable
         double greetingFactor = 0;
         double sentimentFactor = 0;
         double welcomeFactor = 0;
+        double tipPercentage = 0;
         double finalTip = 0;
 
         foreach (Recipe rec in playerScript.getOrder().getItems())
@@ -73,11 +74,12 @@ public class Customer : Interactable
         if (welcomeExist)
             welcomeFactor = (double) Random.Range(0.05f, 0.15f);
 
-        finalTip = System.Math.Round(greetingFactor + sentimentFactor + welcomeFactor, 2);
+        tipPercentage = greetingFactor + sentimentFactor + welcomeFactor;
+        finalTip = System.Math.Round(tipPercentage * payment, 2);
         
-        if(finalTip > 0.3)
-            dialogue.text = dialogue.text + " Also, thank you for the excellent service, I've added a tip of $" + finalTip + "to the payment!";
-        else if(finalTip > 0.2)
+        if(tipPercentage > 0.3)
+            dialogue.text = dialogue.text + " Also, thank you for the excellent service, I've added a tip of $" + finalTip + " to the payment!";
+        else if(tipPercentage > 0.2)
             dialogue.text = dialogue.text + " Also, thanks for doing your job. I've added a tip of $" + finalTip + " to the payment.";
         else
             dialogue.text = dialogue.text + " Also, you barely did your job, but I guess I'll be nice. I've added a tip of $" + finalTip + " to the payment.";
@@ -252,7 +254,7 @@ public class Customer : Interactable
 
     public void LoadRandomOrderDialogue()
     {
-        orderUtteranceMessage = greetingUtteranceContents[UnityEngine.Random.Range(1, orderUtteranceContents.Length - 1)];
+        orderUtteranceMessage = greetingUtteranceContents[UnityEngine.Random.Range(1, orderUtteranceContents.Length - 2)];
         orderUtteranceMessage = orderUtteranceMessage.Substring(0,orderUtteranceMessage.Length-1) + " ";
 
         orderUtteranceMessage = orderUtteranceMessage + orderUtteranceContents[UnityEngine.Random.Range(0, orderUtteranceContents.Length - 1)];
